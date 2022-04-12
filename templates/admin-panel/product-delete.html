@@ -1,0 +1,23 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+	
+
+{% block body %}
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+			<h1 style="color: red;">Удалить продукт</h1>
+			<div class="row p-3">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-inline justify-content-between p-4 border">
+                        <h5>Вы хотите удалить этот "{{ object.name }}" товар?</h5>
+                        <div class="form-inline">
+                            <button type="submit" class="btn btn-success ml-2">Да</button>
+                            <button class="btn btn-danger ml-2"><a href="{% url 'core:product_list' %}">Нет</a></button>
+                        </div>
+                    </div>
+                </form>
+			</div>
+		</div>
+	</div>
+{% endblock body %}

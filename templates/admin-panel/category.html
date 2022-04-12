@@ -1,0 +1,35 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>ngenergo.uz</title> {% endblock title %}
+
+        {% block body %}
+            <div class="tab-content" id="myTabContent">
+
+                <div class="tab-pane show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <h1>Каталог</h1>
+                    <div class="row pb-2">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="input-group">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <!-- <input type="text" class="form-control" placeholder="Введите информацию ..." aria-label="Введите информацию" aria-describedby="basic-addon2"> -->
+                                    <div class="input-group-append">
+                                        <button type="submit"><span class="input-group-text" id="basic-save1">Сохранить</span></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <button class="btn btn-success"><a href="{% url 'core:category_list' %}">Назад</a></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        {% endblock body %}

@@ -1,0 +1,40 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>ngenergo.uz</title> {% endblock title %}
+
+{% block body %}
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <h1>Продукты</h1>
+            <form id="post_form" method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for hidden in productForm.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {{ productForm.media }}
+                {% for field in productForm %}
+                    {{ field }} <br />
+                {% endfor %}
+            
+                {{ imageForm.management_form }}
+                {% for form in imageForm %}
+                    {{ form }}
+                {% endfor %}
+                <div class="row pb-3 pt-3">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-inline justify-content-between">
+                        {% if slug %}
+                            <a href="{% url 'core:product_detail' slug %}" class="btn btn-success">Назад</a>
+                        {% else %}
+                            <a href="{% url 'core:product_list' %}" class="btn btn-success">Назад</a>
+                        {% endif %}
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock body %}
+

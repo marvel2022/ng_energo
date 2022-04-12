@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+	{% block css %} 
+		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/hexagons.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'Montserrat/Montserrat-Black.ttf' %}">
+		<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+		
+	{% endblock css %}
+
+
+	{% block body %}
+	
+	<section class="container p-1 pt-lg-5 pb-lg-5">
+		<div class="row pt-5 pb-4">
+	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 pt-5 pl-0 pr-0">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2997.982598860317!2d69.21832071542273!3d41.28748317927348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b2fe7511b29%3A0x598acf5a088b2f66!2sNG%20Energo!5e0!3m2!1sru!2s!4v1611666032701!5m2!1sru!2s" 
+				width="600"frameborder="0" style="border:0; width: 100%; height: 53vh; " allowfullscreen="" aria-hidden="false"  tabindex="0"></iframe> 
+			  </div>
+			  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 pt-3 pl-4">
+		  <div class="row">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-12 pt-5 ">
+			  <h2>Для связи</h2>
+			  <div class="form-inline"> 
+				<img src="{% static 'img/icons/phoneRed.svg' %}" width="100" height="70">
+				<div class="pl-3">
+				  <a href="tel:+998909899037" class="text-dark"><h4 class="font-weight-bold">+998935868555</h4></a>
+				  <a href="tel:+998909899037" class="text-dark"><h4 class="font-weight-bold">+998909899037</h4></a>
+				</div>
+			</div>
+			</div>
+			<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-12 pt-5 pr-0 ">
+			  <h2>Электронная почта</h2>
+			  <div class="form-inline">
+				<img src="{% static 'img/icons/emailopen.svg' %}" width="80" height="70">
+				<a href="mailto:info@ngenergo.uz" class="text-decoration-none font-weight-bold colorBlack h4">info@ngenergo.uz</a>
+				<a href="mailto:neftgazenergo@mail.ru" class="text-decoration-none font-weight-bold colorBlack h4">neftgazenergo@mail.ru</a>
+			  </div>        
+			</div>
+			<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-12 pt-5 ">
+			  <h2>Адрес</h2>
+			  <div class="form-inline">
+				<img src="{% static 'img/icons/locationRed.svg' %}" width="100" height="70">
+				<h4 class="font-weight-bold">Toshkent shaxar <br> Chilonzor  tumani <br> E-daxa 6-dom </h4>
+			  </div>        
+			</div>
+		  </div>
+		</div>
+	</div>
+	</section>
+
+
+	<section class="backgroundBlue pl-0 pr-0 pt-5 pb-5" style="background-color:#0B1934;">
+		<div class="container pl-3 pr-3 pl-sm-3 pr-sm-3 pl-md-2 pr-md-2 pl-lg-0 pr-lg-0 text-white">
+		  <h2 class="text-center">Узнайте свежую информацию о скидках и акциях первым</h2>
+	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pl-0 pr-0">
+			<form method="get">
+				<div class="input-group mb-3">
+					<input type="email" id="subscriber-email" value="" class="form-control" placeholder="Оставьте свой e-mail" aria-label="Оставьте свой e-mail" aria-describedby="basic-addon2">
+					<button type='submit' onclick="subscription(this)" class="btn backgroundBlack input-group-text tew" id="basic-addon2">Подписаться</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+	  
+		<script>
+			function subscription(email){
+				email = document.getElementById('subscriber-email').value;
+				document.getElementById('subscriber-email').value='';
+				console.log('Email validation method - ' + email.toString());
+				event.preventDefault();
+				var url = "{% url 'core:subscription' %}";
+				
+				fetch(url, {
+				  method:'POST',
+				  headers:{
+					'Content-Type':'application/json',
+					'Accept': 'application/json',
+					'X-CSRFToken':csrftoken,
+				  }, 
+				  body:JSON.stringify({'email':email})
+				})
+				.then((response) => {
+				   return response.json();
+				})
+				.then((data) => {
+				  console.log(data['action'])
+				  if (data['action'] == 'not_valid'){
+					  alert("Пожалуйста, введите действительный адрес электронной почты :(")
+				  }else if(data['action'] == 'subscribed'){
+					alert('Вы уже подписались')
+				  }else{
+					  alert('Спасибо за подписку :)')
+				  }
+				});
+			  }
+		</script>
+
+
+	{% endblock body %}
+
+
+
+	{% block js %} 
+		<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
+		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+		<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+		<script type="text/javascript"> </script>
+
+
+	{% endblock js %}

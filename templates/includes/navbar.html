@@ -1,0 +1,170 @@
+
+{% load static %}
+<style>
+  .header-icon-form{
+    width:300px; 
+    height:50px; 
+    position: relative;
+    margin-right: 10%;
+    margin-bottom: 15px;
+  }
+  .colorBlackHover{
+    font-size: 20px;
+  }
+  .swiper-container{
+    width:100%;
+    overflow:hidden;
+  }
+  .swiper-slide{
+    overflow:hidden;
+    width:100%;
+  }
+   
+
+ @media (max-width: 768px){ 
+  .header-icon-form{
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-right: 50%;
+   
+    width:300px; 
+    height:50px; 
+    position: relative;
+   
+  }
+}
+ @media (max-width: 992px){ 
+   .headerSlider{
+     width: 100%;
+    height: 100vh; 
+   }
+   .header-icon-form{
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-left: -100px;
+    padding-left: -100px;
+  }
+ }
+ @media (max-width: 1200px){ 
+   .headerSlider{
+     width: 100%;
+    height: 70vh; 
+   } 
+ }
+ @media (min-width:768px) and (max-width: 1200px){ 
+  .header-icon-form{
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-left: 35%;
+  }
+ }
+ @media (min-width:576px) and (max-width: 768px){ 
+  .header-icon-form{
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-left: 25%;
+  }
+ }
+ @media (max-width:576px){ 
+  .header-icon-form{
+   margin-top: 10px;
+   margin-bottom: 25px;
+   margin-left: 10%;
+ }
+}
+@media (max-width:400px){ 
+  .header-icon-form{
+   margin-top: 10px;
+   margin-bottom: 25px;
+   margin-left: -40px;
+ }
+}
+ 
+ @media (min-width:1410px) and (max-width: 1620px){ 
+  .colorBlackHover{
+    font-size: 14px;
+  }
+ }
+ @media (min-width:1290px) and (max-width: 1410px){ 
+  .colorBlackHover{
+    font-size: 10px;
+  }
+ }
+
+ @media (min-width:1200px) and (max-width: 1290px){ 
+  .colorBlackHover{
+    color: #ff0009;
+  }
+  .header-icon-form{
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-left: -35%;
+  }
+ }
+</style>
+<nav class="navbar navbar-expand-xl navbar-light fixed-top backgroundRed pl-5 pr-5">
+    <a class="navbar-brand" href="{% url 'core:home' %}">
+	  <img src="{% static 'img/logo.png' %}" width="200">
+     </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
+   </button>
+
+   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     <ul class="navbar-nav ml-auto text-sm-center text-center text-md-center">
+       <li class="nav-item active pt-3">
+         <a class="nav-link pl-2 pr-2" href="{% url 'core:home' %}">
+           <div class="{% if index == 'active' %}activeColor{% else %}colorBlack{% endif %}  colorBlackHover">Главная</div>
+         </a>
+       </li>
+       <li class="nav-item pt-3">
+         <a class="nav-link pl-2 pr-2" href="{% url 'core:category' %}">
+           <div class="{% if products == 'active' %}activeColor{% else %}colorBlack{% endif %} colorBlackHover">Наши продукты</div>
+         </a>
+       </li>
+       <li class="nav-item pt-3">
+         <a class="nav-link pl-2 pr-2" href="{% url 'core:aboutus' %}">
+           <div class="{% if aboutus == 'active' %}activeColor{% else %}colorBlack{% endif %} colorBlackHover">О компании</div>
+         </a>
+
+         <li class="nav-item pt-3 pr-lg-5 pr-xl-5 pr-0">
+           <a class="nav-link pl-2 pr-2" href="{% url 'core:contact' %}">
+             <div class="{% if contact == 'active' %}activeColor{% else %}colorBlack{% endif %} colorBlackHover">Контакты</div>
+           </a>
+         </li> 
+
+         <li class="nav-item pt-3 pr-md-5 pr-lg-5 pr-xl-5">          
+       <div class="bg-white form-inline header-icon-form">
+        <span class="btn-phone header-icon ml-1">
+          <a href="tel:+998935868555" class="text-decoration-none">
+            <img src="{% static 'img/phone.svg' %}" width="40" height="40" alt="">
+          </a>
+        </span>
+        <h4 class="ml-4 pl-5 pt-2"> <a href="tel:+998935868555" class="text-decoration-none font-weight-bold text-dark h4"> 93-586-85-55 </a> </h4>
+        <span class="btn-mail header-icon mr-auto" style="margin-left: 237px;">
+          <a href="mailto:neftgazenergo@mail.ru" class="text-decoration-none">
+            <img src="{% static 'img/mail.svg' %}" width="40" height="40" alt="">
+          </a>          
+        </span>
+       </div>
+        </li> 
+
+       </ul>
+
+       <!-- <form class="form-control header-icon-form" style="width:300px; margin-right: 80px;">
+        <a class="colorBlack plPhone pt-4 pl-0" href="tel:+998935868555">
+            <span class="btn-phone header-icon">
+              <img src="{% static 'img/phone.svg' %}" width="40" height="40" alt="">
+            </span>
+            <span class="pt-5 font-weight-bold" style="font-size:20px; padding-left: 77px; padding-right: 10px;">93-586-85-55</span>    
+          </a>
+        
+        <a class="colorBlack plMail pt-4 pl-2" href="mailto:eneftgaz@inbox.ru">
+          <span class="btn-mail header-icon ">
+            <img src="{% static 'img/mail.svg' %}" width="40" height="40" alt="">
+          </span>
+        </a>
+      </form> -->
+    </div>     
+ </nav>
+

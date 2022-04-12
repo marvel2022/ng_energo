@@ -1,0 +1,2 @@
+build-email-newsletter-django-twilio-sendgrid => https://www.twilio.com/blog/build-email-newsletter-django-twilio-sendgrid
+sendgrid-python => https://github.com/sendgrid/sendgrid-python/blob/main/USAGE.md

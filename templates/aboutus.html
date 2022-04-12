@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+	{% block css %} 
+		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/hexagons.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.fancybox.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+		<style>
+
+		@media (max-width:576px){
+			.siteCounter{
+			padding-top: 10px;
+			padding-left: 40%;
+			}
+		}
+		</style>
+	{% endblock css %}
+
+	{% block body %}
+
+	
+    <section class="container pb-5 mt--100  pl-4 pr-4 pl-sm-3 pr-sm-3">  
+		<h2 class="pt-5 catalog-name">О КОМПАНИИ</h2>
+		<div class="row">
+		 <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+		 	<p class="text-justify">Компания "NeftGazEnergo" является лидирующим поставщиком трубопроводных арматур, 
+				электротехнических материалов и промышленных оборудований по всему Узбекистану.</p>
+			<p class="text-justify"> 
+			   	Мы предоставляем вам поставку продукции широкого ассортимента от ведущих зарубежных производителей по 
+			   	выгодным ценам.</p>
+			<p class="text-justify"> 	
+				Обратившись к нам, вы получите достоверную информацию о продукции, своевременную 
+				доставку, сертификатов к продукции и гарантию лучшей цены на рынке. Вся продукция, предоставляемая 
+				нашей компанией отвечает и соответствует ко всем нормам безопасности. </p>
+		</div>
+		<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+		  <img src="{% static 'img/ofis.jpg' %}" width="100%" height="350">
+		</div>
+		</div>
+	  </section>
+
+	  <section class="container-fluid pb-5 pt-5 backgroundBlue" style="background-color: #0B1934;">
+		<div class="container">
+		  <h2 class="text-white pb-3 pt-3 text-center">Выгода с нами сотрудничать</h2>
+		  <div class="row">
+		  <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+			<div class="card text-center bg-transparent border-0">
+			  <div class="pl-5 pr-5 pt-2 pb-2 text-center m-auto">
+				<div style="border: 2px solid #ffffff; border-radius:100%; width: 150px; height: 120px; padding:30px;">
+				  <h1 class="count text-white" style="font-size: 45px;">10</h1>
+				</div>   
+			  </div>
+			  <h3 class="text-white pt-2">ЛЕТ НА РЫНКЕ</h3>
+			</div>          
+		  </div>
+		  <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+			<div class="card text-center bg-transparent border-0">
+			  <div class="pl-5 pr-5 pt-2 pb-2 text-center m-auto">
+				<div style="border: 2px solid #ffffff; border-radius:100%; width: 150px; height: 120px; padding:30px;">
+				  <h1 class="count text-white" style="font-size: 40px;">999</h1>
+				</div>   
+			  </div>
+			  <h3 class="text-white pt-2"> БОЛЕЕ ПРОДУКЦИИ</h3>
+			</div>          
+		  </div>
+		  <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+			<div class="card text-center bg-transparent border-0">
+			  <div class="pl-5 pr-5 pt-2 pb-2 text-center m-auto">
+				<div style="border: 2px solid #ffffff; border-radius:100%; width: 150px; height: 120px; padding:30px;">
+				  <h1 class="count text-white" style="font-size: 45px;">10</h1>
+				</div>   
+			  </div>
+			  <h3 class="text-white pt-2">СОТРУДНИКОВ КОМПАНИИ</h3>
+			</div>          
+		  </div>
+		  <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+			<div class="card text-center bg-transparent border-0">
+			  <div class="pl-5 pr-5 pt-2 pb-2 text-center m-auto">
+				<div style="border: 2px solid #ffffff; border-radius:100%; width: 150px; height: 120px; padding:30px;">
+				  <h1 class="text-white pt-2" style="font-size: 35px; display: inline-block;">10%+</h1>
+				</div>   
+			  </div>
+			  <h3 class="text-white pt-2">СКИДКА</h3>
+			</div>          
+		  </div>
+		</div>
+		</div>
+	  </section>
+  
+	  
+	<section class="container pb-5 pl-0 pr-0">
+		<div class="row">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<h1 class="color text-center pt-5">Лицензии</h1>
+				<div class="row imglist">
+					{% for img in cartificate_images %}
+						<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 pt-1">
+							<a href="{{ img.imageURL }}" data-fancybox="true" data-caption="{{ img.caption }}">
+								<img src="{{ img.imageURL }}" width="100%">			
+							</a>
+						</div>
+					{% endfor %}
+			
+					<!-- <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 pt-1">
+						<a href="{% static 'img/litsenziya.jpg' %}" data-fancybox="true" data-caption="">
+							<img src="{% static 'img/litsenziya.jpg' %}" width="100%">		
+					</a>
+					</div>
+				
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 pt-1">
+						<a href="{% static 'img/leecenziia21-2.jpg' %}" data-fancybox="true" data-caption="">
+							<img src="{% static 'img/leecenziia21-2.jpg' %}" width="100%">		
+					</a>
+					</div>
+				
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 pt-1">
+						<a href="{% static 'img/81-1.jpg' %}" data-fancybox="true" data-caption="">
+							<img src="{% static 'img/81-1.jpg' %}" width="100%">	
+					</a>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="container-fluid bg-light">
+		<div class="container pt-5 pb-5 text-center">
+			<h2 class="font-weight-bold pb-3 text-dark">Наши партнёры</h2>
+			<div class="customer-logos m-auto">
+				{% for img in partner_images %}
+					<div class="slide"><img src="{{ img.imageURL }}"   width="250" height="150"></div>
+				{% endfor %}
+				<!-- <div class="slide"><img src="{% static 'img/clients/c1.jpg' %}"   width="250" height="150"></div>
+				<div class="slide"><img src="{% static 'img/clients/c2.png' %}"   width="250" height="150"></div>
+				<div class="slide"><img src="{% static 'img/clients/c3.jpg' %}"   width="250" height="150"></div>
+				<div class="slide"><img src="{% static 'img/clients/c4.png' %}"   width="250" height="150"></div> -->
+			</div>     
+		</div>
+	</section>
+
+	{% endblock body %}
+
+
+
+	{% block js %} 
+		<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.fancybox.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+		<script type="text/javascript"> </script>
+	{% endblock js %}

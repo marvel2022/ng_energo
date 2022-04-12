@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+{% load static %}
+
+	{% block css %}
+	
+		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/hexagons.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+		
+		<style type="text/css">
+			#myCarousel .list-inline {
+					white-space:nowrap;
+					overflow-x:auto;
+			}
+			#myCarousel .carousel-indicators {
+					position: static;
+					left: initial;
+					width: initial;
+					margin-left: initial;
+					opacity:0.8;
+			}
+			#myCarousel .carousel-indicators > li {
+					width: initial;
+					height: initial;
+					text-indent: initial;
+			}
+			#myCarousel .carousel-indicators > li.active img {
+					opacity: 1;
+			}
+
+			.hsplitter h1:before{
+				content: '';
+				width: 95%;
+				height: 5px;
+				background-color: red;
+				color: #000;
+				position: absolute;
+				margin: 43px auto;
+				}
+				
+				
+			.hsplitterh1{
+				font-size: 35px;
+			}
+			@media(max-width:576px){
+				.hsplitterh1{
+				font-size: 1em;
+				}
+				.hsplitter h1:before{
+					content: '';
+					width: 87%;
+					height: 5px;
+					background-color: red;
+					color: #000;
+					position: absolute;
+					margin: 20px auto;
+					}		
+					
+			}
+  
+		</style>
+
+	{% endblock css %}
+
+
+	{% block body %}
+	
+	<section class="container pt-5 pl-0 pr-0">
+		<div class="row pt-5 pb-5">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 hsplitter">
+				<h1 class="font-weight-bold pl-4 pr-4 pt-5 hsplitterh1">{{ object.name }}</h1>
+			</div>
+	   		<div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 pl-4 pr-4">
+					<div class="row align-items-center">
+						<div class="col-lg-12" id="slider">
+							<div id="myCarousel" class="carousel slide shadow">
+								<div class="carousel-inner">
+									{% for image in object.product_images.all %}
+										{% if forloop.counter0 == 0 %}
+											<div class="active carousel-item" data-slide-number="{{forloop.counter0}}">
+												<img src="{{ image.imageURL }}" id="image{{ forloop.counter0 }}" class="img-fluid" width="100%" style="height: 35vh;">
+											</div>
+										{% else %}
+											<div class="carousel-item" data-slide-number="{{forloop.counter0}}">
+												<img src="{{ image.imageURl }}" id="image{{ forloop.counter0 }}" class="img-fluid" width="100%" style="height: 35vh;">
+											</div>
+										{% endif %}
+									{% endfor %}
+								</div>
+								<ul class="carousel-indicators list-inline mx-auto border">
+									{% for image in object.product_images.all %}
+										{% if forloop.counter0 == 0 %}
+											<li class="list-inline-item border p-0 m-0 active">
+												<a id="carousel-selector-{{forloop.counter0}}" class="selected" data-slide-to="{{forloop.counter0}}" data-target="#myCarousel">
+													<img src="{{ image.imageURL }}" onclick="image_src(this)" data-id="{{ forloop.counter0 }}" data-src="{{ image.imageURL }}" class="img-fluid" style="width: 180px; height: 15vh;">
+												</a>
+											</li>
+										{% else %}
+											<li class="list-inline-item border p-0 m-0">
+												<a id="carousel-selector-{{forloop.counter0}}" class="selected" data-slide-to="{{forloop.counter0}}" data-target="#myCarousel">
+													<img src="{{ image.imageURL }}" onclick="image_src(this)" data-id="{{ forloop.counter0 }}" data-src="{{ image.imageURL }}" class="img-fluid" style="width: 180px; height: 15vh;">
+												</a>
+											</li>
+										{% endif %}
+									{% endfor %}
+									<script>
+										function image_src($this){
+											var id = $this.dataset.id;
+											var src = $this.dataset.src;
+											var image = document.getElementById('image'+id.toString());
+											document.getElementById('image'+id.toString()).src = src;
+										}
+									</script>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				<!-- Description -->
+				<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pl-5 pr-5 pl-sm-4 pr-sm-4 pl-md-3 pr-md-3 pl-lg-0 pr-lg-0">
+					<p class="pl-5 pr-5 pl-sm-4 pr-sm-4 pl-md-3 pr-md-3 pl-lg-0 pr-lg-0 text-justify medium-text-justify">
+						{{ object.description|safe }}<br>
+					</p>
+				</div>
+				<!-- Description -->
+
+				<!-- Spesification -->
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pl-0 pr-0 pl-sm-0 pr-sm-0 pl-lg-5 pr-lg-5">
+					<div class="row">
+					  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pl-5 pr-5 pl-sm-4 pr-sm-4 pl-md-3 pr-md-3 pl-lg-0 pr-lg-0 pt-3"><h3>Характеристики</h3></div>
+					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pl-5 pr-5 pl-sm-4 pr-sm-4 pl-md-3 pr-md-3 pl-lg-0 pr-lg-0">
+							<!-- <div class="form-inline justify-content-between border">
+								<span class="p-2 m-0 w-50">Соответствие регламентам ЕАС, Таможенного Союза</span>
+								<span class="border-left p-2 m-0 w-50">ТР ТС 010; ТР ТС 032</span>
+							</div>
+							<div class="form-inline justify-content-between border">
+								<span class="p-2 m-0 w-50">Пропуск среды в затворе</span>
+								<span class="border-left p-2 m-0 w-50">класс В по ГОСТ Р 54808-2011, см³/мин</span>
+							</div>
+							<div class="form-inline justify-content-between border">
+								<span class="p-2 m-0 w-50">Тип затвора с подачей среды</span>
+								<span class="border-left p-2 m-0 w-50">Пружинный затвор с уплотнением «метал по металлу», подача среды по стрелке на корпусе под затвор</span>
+							</div>
+							<div class="form-inline justify-content-between border">
+								<span class="p-2 m-0 w-50">Монтажное положение</span>
+								<span class="border-left p-2 m-0 w-50">По стрелке на корпусе клапана, только горизонтально</span>
+							</div>
+							<div class="form-inline justify-content-between border">
+								<span class="p-2 m-0 w-50">Тип присоединений</span>
+								<span class="border-left p-2 m-0 w-50">Муфтовый / Фланцевый / Под приварку</span>
+							</div>
+							<div class="form-inline justify-content-between border">
+								<span class="p-2 m-0 w-50">Условный проход Ду (мм)</span>
+								<span class="border-left p-2 m-0 w-50">15, 20, 25, 32, 40, 50</span>
+							</div>
+							<div class="form-inline justify-content-between border ">
+								<span class=" p-2 m-0 w-50">Диапазон условного давления Ру (кг/см²)</span>
+								<span class="border-left p-2 m-0 w-50">16, 25, 40, 63, 100, 160, 250, 400</span>
+							</div> -->
+							{{ object.spesification|safe }}
+						</div>
+					</div>
+				</div>
+				<!-- End Spesification -->
+			</div>
+		</section>
+
+
+		  <section class="container-fluid bg-light p-3 p-sm-3 p-md-3 pt-lg-0 pb-lg-5 pl-lg-5 pr-lg-5  pl-xl-5 pr-xl-5 pt-xl-0 pb-xl-5 border-bottom">
+			<div class="row p-3 p-sm-3 p-md-3 pt-lg-0 pb-lg-0 pl-lg-5 pr-lg-5  pl-xl-5 pr-xl-5 pt-xl-5 pb-xl-0">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 backgroundGrey p-3">
+				  <h4 class="font-weight-bold colorBlack pl-3">Рекомендуемые продукты</h4>
+				</div>
+			  </div>
+			<div class="row p-3 p-sm-3 p-md-3 pt-lg-0 pb-lg-5 pl-lg-5 pr-lg-5  pl-xl-5 pr-xl-5 pt-xl-0 pb-xl-5">
+				<!-- recommended products -->
+				{% for obj in recommended_product %}
+				<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 p-3  border">
+					<div class="profile-card card shadow-lg border-0 m-0">
+						{% if obj.to_order %}
+							<span class="profile-title-info text-right text-white font-weight-bold pr-3 pt-2" >
+								<h6>На заказ</h6>  
+							</span>
+						{% else %}			
+							{% if obj.available %}													
+							<span class="profile-title-green text-right text-white font-weight-bold pr-3 pt-2" >
+									<h6>Есть в наличии</h6>  
+								</span>
+							{% else %}
+								<span class="profile-title-secodary text-right text-white font-weight-bold pr-3 pt-2" >
+									<h6>Нет в наличии</h6>  
+								</span>
+							{% endif %}
+						{% endif %}
+
+						<div class="profile-img">
+							{% for image in obj.product_images.all %}
+								{% if forloop.counter == 1 %}
+									<a href="{% url 'core:detail' obj.slug %}">
+										<img src="{{ image.imageURL }}" width="100%" height="300" alt="Team Image"/>
+									</a>
+								{% endif %}
+							{% endfor %}
+						</div>
+						<div class="card-body border-top backgroundRed">
+							<a href="{% url 'core:detail' obj.slug %}" class="card-title h5 mb-0 p-2 text-white">{{ obj.name|truncatechars:25 }}</a>
+						  </div>			
+
+					</div>
+				</div>
+				{% endfor %}
+				<!-- recommended products -->
+			</div>
+		</section>
+	{% endblock body %}
+
+	{% block js %}
+		<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+		<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> -->
+		<script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+		<script> </script>
+	{% endblock js %}

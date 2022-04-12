@@ -1,0 +1,81 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>ngenergo.uz</title> {% endblock title %}
+
+        {% block body %}
+            <div class="tab-content" id="myTabContent">
+
+                <div class="tab-pane show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <h1>Продукты</h1>
+               
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        {{ form.non_field_errors }}
+                        
+
+                    
+                        <div class="row pb-4">
+                            {{ form.category.errors }}
+                            {{ form.category }}
+                            
+                            {{ form.name.errors }}
+                            {{ form.name }}
+
+                            {{ form.slug.errors }}
+                            {{ form.slug }}
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                
+                                <img src="{% static 'img/bg1.png' %}" width="100%" height="200" alt="">
+                                <div class="form-inline">
+                                    <img src="{% static 'img/myprintuz.jpg' %}" class="p-1" width="33%" height="100" alt="">
+                                    <img src="{% static 'img/myprintuz.jpg' %}" class="p-1" width="33%" height="100" alt="">
+                                    <img src="{% static 'img/myprintuz.jpg' %}" class="p-1" width="33%" height="100" alt="">
+                                </div>
+                                <a href="#!" class="btn btn-success w-100">Изменить изображение</a>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                <div class="form-group">
+                                    <label for=""></label>
+                                    {{ form.description.errors }}
+                                    {{ form.description }}
+                                    <!-- <textarea class="form-control" name="textarea" id="textarea" rows="12"></textarea> -->
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-3">
+                                <div class="form-group">
+                                    <label for=""></label>
+                                    {{ form.spesification.errors }}
+                                    {{ form.spesification }}
+                                    <!-- <textarea class="form-control" name="textarea" id="textarea" rows="12"></textarea> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pb-3 pt-3">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-inline justify-content-between">
+                                <a href="{% url 'core:product_detail' form.slug %}"><button class="btn btn-success">Назад</button></a>
+                                <button type="submit" class="btn btn-success">Сохранить</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="row hide">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 border p-3">
+                            <form action="upload_file" id="img-upload-form" method="post" enctype="multipart/form-data">                    
+                                <img src="{% static 'img/bg1.png' %}" width="100%" height="250" alt="img1">
+                                <p class="pt-1 text-right">
+                                    <label for="upload_imgs" class="button hollow">Выберите свои изображения +</label>
+                                    <input class="show-for-sr" type="file" id="upload_imgs" name="upload_imgs" multiple/>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endblock body %}
+

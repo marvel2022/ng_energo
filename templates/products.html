@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+{% load static %}
+
+	{% block css %}
+		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/hexagons.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+		<style> 
+			.vibration-item{
+				border: 1px solid #000000;
+			
+			}
+			.vibration-item:hover{
+				border-left:  5px solid #ff0009;
+	  	    	border-right: 5px solid #ff0009;
+				background-color: #ffffff; 
+			 }
+			.collapsed{
+			    background-color: #e8e8e8;
+			    border: 1px solid #000000;
+			  }
+			.collapsed:hover{				  
+				border-left:  5px solid #ff0009;
+				border-right: 5px solid #ff0009;
+		  		background-color: #ffffff; 
+			}
+			
+			  
+
+		</style>
+	{% endblock css %}
+
+
+	{% block body %}
+		<section class="container-fluid p-4 pt-5 mt-5">
+
+				<div class="row p-0 p-sm-0 p-md-3 p-lg-5 px-lg-5">
+				<!-- Category and Product List  -->
+				<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3">
+					<h3 class="font-weight-bold w-100 text-center h4 text-white p-2" style="background-color: #000000;">Продукция</h3>
+
+					<div id="accordion" class="accordion">
+						<div class="card mb-0">						
+							{% for category in category_list %}
+								{% if current_category.pk == category.pk %}
+											
+								<div class="card-header collapsed" data-toggle="collapse" aria-expanded="true" href="#collapse{{ forloop.counter }}">
+									
+									<a href="{% url 'core:category' category.slug %}" class="card-title accordion_product_title text-dark">{{ category.name }}</a>
+									</div>
+									<div id="collapse{{ forloop.counter }}" class="card-body collapse  show" data-parent="#accordion" >
+										<ul class="list-unstyled mb-0 mt-0 ">																							
+											{% for product in category.product_category.all %}
+												<li class="p-2 vibration-item">
+													<a href="{% url 'core:detail' product.slug %}"  class="catologProductItems text-dark" >
+														{{ product.name }}
+													</a>
+												</li>
+											{% empty %}
+											<h6 class="text-center text-danger pt-3">Нет продуктов, которых можно избежать ;)</h6>
+											{% endfor %}
+										</ul>
+									</div>
+								{% else %}
+									<div class="card-header collapsed" data-toggle="collapse" aria-expanded="false" href="#collapse{{ forloop.counter }}">
+										<a href="{% url 'core:category' category.slug %}" class="card-title accordion_product_title text-dark">{{ category.name }}</a>
+									</div>
+									<div id="collapse{{ forloop.counter }}" class="card-body collapse" data-parent="#accordion" >
+										<ul class="list-unstyled mb-0 mt-0 ">	
+								
+											{% for product in category.product_category.all %}
+												<li class="p-2 vibration-item" >
+													<a href="{% url 'core:detail' product.slug %}"  class="catologProductItems text-dark" >
+														{{ product.name }}
+													</a>
+												</li>
+											{% empty %}
+											<h6 class="text-center text-danger pt-3">Нет продуктов, которых можно избежать ;)</h6>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</div>	
+					<div class="p-2" style="background-color: #e8e8e8; border: 1px solid #000000;">
+						<form action="{% url 'core:p_search_view' %}" method='GET' class="input-group">
+							<input name="q" type="text" class="form-control" placeholder="БЫСТРЫЙ ПОИСК..." aria-label="Имя получателя" aria-describedby="basic-addon2">
+							<button type='submit' class="input-group-text backgroundBlack text-white" id="basic-addon2"><i class="fa fa-search text-white mr-2"></i> ПОИСК </button>
+						</form>
+					  </div>
+				</div>
+				<!-- Category and Product List  -->
+
+				<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9 pt-1">
+					<div class="row text-center">
+						{% for obj in object_list %}
+
+							<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-4">
+								<div class="profile-card card shadow-lg border-0 m-0">
+									{% if obj.to_order %}
+										<span class="profile-title-info text-right text-white font-weight-bold pr-3 pt-2" >
+											<h6>На заказ</h6>  
+										</span>
+									{% else %}			
+										{% if obj.available %}													
+										<span class="profile-title-green text-right text-white font-weight-bold pr-3 pt-2" >
+												<h6>Есть в наличии</h6>  
+											</span>
+										{% else %}
+											<span class="profile-title-secodary text-right text-white font-weight-bold pr-3 pt-2" >
+												<h6>Нет в наличии</h6>  
+											</span>
+										{% endif %}
+									{% endif %}
+									<div class="profile-img">
+									
+										{% for image in obj.product_images.all %}						
+											{% if forloop.counter == 1 %}	
+												<a href="{% url 'core:detail' obj.slug %}">
+													<img src="{{ image.imageURL }}" width="100%" height="300" alt="Team Image"/>
+												</a>
+											{% endif %}
+										{% endfor %}
+									</div>
+									<div class="card-body border-top backgroundRed">
+										<a href="{% url 'core:detail' obj.slug %}" class="card-title h5 mb-0 p-2 text-white">{{ obj.name }}</a>
+									</div>
+								</div>
+							</div>		
+						{% empty %}
+							<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-5 pb-5">
+								<div class="pt-5 pb-5 bg-transparent">
+										<h5 class="text-danger">Нет продуктов, которых можно избежать ;)</h5>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+
+					<!-- Pagination -->
+					{% if object_list %}
+
+
+					<div class="row text-center">  
+						<nav class="m-auto" aria-label="Page navigation example">
+						  <ul class="pagination pagination-lg">
+							<li class="page-item pl-3 pr-3 pt-2 pb-2">
+								{% if page_obj.has_previous %}
+									<a class="font-weight-bold" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								{% else %}
+								<a class="font-weight-bold" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								{% endif %}
+							</li>
+							{% for index in page_obj.paginator.page_range %}
+							{% if page_obj.number == index %}
+							<li class="page-item ml-2 mr-2 pl-3 pr-3 pt-2 pb-2  itemActive"><a class="font-weight-bold " {% if page_obj.has_previous or page_obj.has_next %} href="?page={{ index }}" {% else %} href="#" {% endif %}>{{ index }}</a></li>	
+							{% else %}
+							<li class="page-item ml-2 mr-2 pl-3 pr-3 pt-2 pb-2"><a class="font-weight-bold"href="?page={{ index }}">{{ index }}</a></li>
+							{% endif %}
+						{% endfor %} 
+
+							<li class="page-item pl-3 pr-3 pt-2 pb-2">
+								{% if page_obj.has_next %}
+									<a href="?page={{ page_obj.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								{% else %}
+									<a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								{% endif %}
+							</li>
+
+						</ul>
+						</nav>
+					  </div>
+
+					{% endif %}
+					<!-- End Pagination -->
+					
+				</div>
+			</div>
+		</section>
+
+
+
+		<section class="container-fluid bg-light p-lg-5 p-0 mb-3 border-bottom">
+			<div class="row pl-0 pr-0 pl-lg-5 pr-lg-5">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 backgroundGrey p-4">
+					<h4 class="font-weight-bold colorBlack">Рекомендуемые продукты</h4>
+				</div>
+			</div>
+			<div class="row pl-5 pr-5">
+				<!-- recommended products -->
+				{% for obj in recommended_product %}
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 p-0 p-lg-2 px-lg-2">
+						<div class="profile-card card shadow-lg border-0 m-0">
+							{% if obj.to_order %}
+								<span class="profile-title-info text-right text-white font-weight-bold pr-3 pt-2" >
+									<h6>На заказ</h6>  
+								</span>
+							{% else %}			
+								{% if obj.available %}													
+								<span class="profile-title-green text-right text-white font-weight-bold pr-3 pt-2" >
+										<h6>Есть в наличии</h6>  
+									</span>
+								{% else %}
+									<span class="profile-title-secodary text-right text-white font-weight-bold pr-3 pt-2" >
+										<h6>Нет в наличии</h6>  
+									</span>
+								{% endif %}
+							{% endif %}
+							<div class="profile-img">
+								{% for image in obj.product_images.all %}
+									{% if forloop.counter == 1 %}
+										<a href="{% url 'core:detail' obj.slug %}">
+											<img src="{{ image.imageURL }}" width="100%" height="300" alt="Team Image"/>
+										</a>
+									{% endif %}
+								{% endfor %}
+							</div>
+							<div class="card-body border-top backgroundRed">
+								<a href="{% url 'core:detail' obj.slug %}" class="card-title h5 mb-0 p-2 text-white">{{ obj.name|truncatechars:20 }}</a>
+							</div>
+						</div>
+					</div>
+
+				{% endfor %}
+				<!-- recommended products -->
+			</div>
+		</section>
+	{% endblock body %}
+
+	{% block js %}
+		<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
+		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.expander.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+		<script type="text/javascript"> </script>
+	{% endblock js %}

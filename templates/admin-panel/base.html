@@ -1,0 +1,96 @@
+{% load static %}
+	
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        {% block title %}
+            <title>ngenergo.uz</title>
+        {% endblock title %}
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.4-rc1/css/foundation.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <style>	
+            .tabs-left>li.active>a,
+            .tabs-left>li.active>a:hover,
+            .tabs-left>li.active>a:focus {
+                border-bottom-color: #ddd;
+                border-right-color: transparent;
+            }
+            .tabs-left>li>a {
+                border-radius: 4px 0 0 4px;
+                margin-right: 0;
+                display:block;
+            }
+        </style>
+ 
+    </head>
+    <body>
+
+        <header class="container-fluid pl-0 pr-0">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light pt-3 pb-3 pl-5 pr-5">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/"><img src="{% static 'img/logo.png' %}" width="200"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div class="input-group w-25 ml-auto">
+                            <input type="text" class="form-control" placeholder="Поиск..." aria-label="Поиск" aria-describedby="basic-addon2">
+                            <span class="input-group-text" id="basic-addon2">Поиск</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container p-5">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 border pl-0 pr-0">
+                    <ul class="nav nav-pills flex-column m-0" id="myTab" role="tablist">
+                        <li class="nav-item p-2">
+                            <a class="nav-link bg-success text-white active" id="home-tab" data-toggle="tab" href="{% url 'core:admin_panel' %}" role="tab" aria-controls="home" aria-selected="true">Главная</a>
+                        </li>
+                        <li class="nav-item p-2">
+                            <a class="nav-link bg-success text-white" id="profile-tab" data-toggle="tab" href="{% url 'core:category_list' %}" role="tab" aria-controls="profile" aria-selected="false">Каталог</a>
+                        </li>
+                        <li class="nav-item p-2">
+                            <a class="nav-link bg-success text-white" id="contact-tab" data-toggle="tab" href="{% url 'core:product_list' %}" role="tab" aria-controls="contact" aria-selected="false">Продукты</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 border">
+
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 p-3">
+                            <div class="card p-3">
+                                <h5 class="font-weight-bold">Количество посетителей</h5>
+                                <h4><span><i class="fa fa-user"></i></span> 546542</h4>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 p-3">
+                            <div class="card p-3">
+                                <h5 class="font-weight-bold">Всего просмотров товаров</h5>
+                                <h4><span><i class="fa fa-eye"></i></span> {{ view_count }}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% block body %}
+
+                    {% endblock body %}
+
+                </div>
+            </div>
+        </div>
+
+        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+
+    </body>
+</html>

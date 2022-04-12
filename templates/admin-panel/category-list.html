@@ -1,0 +1,37 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>ngenergo.uz</title> {% endblock title %}
+
+        {% block body %}
+            <div class="tab-content" id="myTabContent">
+
+                <div class="tab-pane show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <h1>Каталог</h1>
+                    <div class="row pb-2">
+                        {% for obj in object_list %}
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="input-group">
+                                    <p type="text" class="form-control" placeholder="Введите информацию ..." aria-label="Введите информацию" aria-describedby="basic-addon2">{{ obj.name }}</p>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-save1"><a href="{% url 'core:category_delete' obj.slug %}">Удалить</a></span>
+                                        <span class="input-group-text" id="basic-save1"><a href="{% url 'core:category_update' obj.slug %}">Обновить</a></span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <button class="btn btn-success"><a href="{% url 'core:admin_panel' %}">Назад</a></button>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <button class="btn btn-success"><a href="{% url 'core:category_create' %}">Add Category</a></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        {% endblock body %}

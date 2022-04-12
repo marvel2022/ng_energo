@@ -1,0 +1,322 @@
+{% extends "base.html" %}
+{% load static %}
+
+	{% block css %}
+		<link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favi.png' %}">
+
+		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/hexagons.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+		<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+		<style>
+			.podpisatsaText{
+				font-size: 32px; 
+			}
+			@media (max-width:576px){ 
+			 .podpisatsaText{
+				 font-size:1em; 
+			 }
+			 }
+			 @media (min-width:768px) and (max-width:1200px){ 
+				.podpisatsaText{
+					font-size:1.5em; 
+				}
+				}
+
+		 </style>
+	{% endblock css %}
+
+
+	{% block body %}
+		
+		<section class="container-fluid pt-5 pl-0 pr-0">
+			<div class="swiper-container">
+				<div class="swiper-wrapper pt-5"> 
+					{% for image in home_image %} 
+						<div class="swiper-slide">
+							<h1 class="carousel-caption" style="left:20px; top: 15%; font-size: 3vw; width:50%;" >{{ image.caption|safe }}</h1>
+							<img src="{{ image.imageURL }}" width="100%">
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+
+		<section class="container-fluid pt-5 pb-5">
+			<div class="row pl-lg-5 pr-lg-5 pb-lg-5 pt-lg-2 p-0">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3 category_col">
+					<ul class="list-unstyled">
+						<li class="font-weight-bold text-center h4 text-white text-uppercase" style="border: 3px solid #000000; background-color: #000000; ">продукты</li>
+						{% for obj in category_list %}
+							{% if obj.top %}
+								<li><a class="colorBlack font-weight-bold h6" href="{% url 'core:home' obj.slug %}">{{ obj.name }}</a></li>
+							{% endif %}
+						{% empty %}
+							<li><a class="colorBlack font-weight-bold h6" href="#!">Нет продуктов, которых можно избежать ;)</a></li>
+						{% endfor %}
+						<li>
+							<form action="{% url 'core:search_view' %}" method='GET' class="input-group">
+									<input name="q" type="text" class="form-control" placeholder="БЫСТРЫЙ ПОИСК..." aria-label="Имя получателя" aria-describedby="basic-addon2">
+									<button type='submit' class="input-group-text backgroundBlack text-white" id="basic-addon2"><i class="fa fa-search text-white mr-2"></i> ПОИСК </button>
+							</form>
+						 </li>
+					</ul>
+					</div>
+
+
+				<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9">
+					<div class="row text-center">
+						{% for obj in object_list %}
+							<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-4">
+								<div class="profile-card card border-0 m-0">
+									{% if obj.to_order %}
+										<span class="profile-title-info text-right text-white font-weight-bold pr-3 pt-2" >
+										<h6>На заказ</h6>  
+										</span>
+									{% else %}      
+										{% if obj.available %}                          
+										<span class="profile-title-green text-right text-white font-weight-bold pr-3 pt-2" >
+											<h6>Есть в наличии</h6>  
+										</span>
+										{% else %}
+										<span class="profile-title-secodary text-right text-white font-weight-bold pr-3 pt-2" >
+											<h6>Нет в наличии</h6>  
+										</span>
+										{% endif %}
+									{% endif %}
+									<div class="profile-img">
+										{% for image in obj.product_images.all %}
+										{% if forloop.counter == 1 %}
+											<a href="{% url 'core:detail' obj.slug %}">
+												<img src="{{ image.imageURL }}" width="100%" height="300" alt="Team Image"/>
+											</a>
+										{% endif %}
+										{% endfor %}
+									</div>
+									<div class="card-body border-top backgroundRed">
+										<a href="{% url 'core:detail' obj.slug %}" class="card-title h5 mb-0 p-2 text-white">{{ obj.name }}</a>
+									</div>
+									</div>
+								</div>
+							{% empty %}
+								<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pb-5 pt-5">
+									<div class="bg-transparent pt-5 pb-5">
+										<h5 class="text-danger">Нет продуктов, которых можно избежать ;)</h5>
+									</div>
+								</div>
+							{% endfor %}
+			</div>
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+				<button class="btn colorBlack pl-5 pr-5 font-weight-bold" style="border: 3px solid #000;"><a href="{% url 'core:category'%}" class="text-dark">Больше продукции</a></button>  
+				</div>
+			</div>
+		</div>
+		</section>
+	
+		<section class="container-fluid pb-5 pt-5 " style="background-color: #0B1934;">
+		<div class="container" >
+			<h1 class="text-white pb-3 pt-3 text-center">Выгодно с нами работать</h1>
+			<div class="row">
+			<div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+			<div class="card text-center bg-transparent border-0">
+			<div class="pl-5 pr-5 pt-2 pb-2">
+				<img src="{% static 'img/icons/icon-1.svg' %}" width="80%" class="m-auto" height="200" alt="our-advatage-img1">
+			</div>
+			<h4 class="text-white pt-2">Предоставляем  сертификаты ко всей продукции</h4>
+			</div>          
+			</div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+			<div class="card text-center bg-transparent border-0">
+			<div class="pl-5 pr-5 pt-2 pb-2">
+				<img src="{% static 'img/icons/icon-2.svg' %}" width="80%" class="m-auto" height="200" alt="our-advatage-img2">
+			</div>
+			<h4 class="text-white pt-2">Доставляем по всему Узбекистану</h4>
+			</div>          
+			</div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+			<div class="card text-center bg-transparent border-0">
+			<div class="pl-5 pr-5 pt-2 pb-2">
+				<img src="{% static 'img/icons/icon-3.svg' %}" width="80%" class="m-auto" height="200" alt="our-advatage-img3">
+			</div>
+			<h4 class="text-white pt-2">Большинство продукции в наличии</h4>
+			</div>          
+			</div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+			<div class="card text-center bg-transparent border-0">
+			<div class="pl-5 pr-5 pt-2 pb-2">
+				<img src="{% static 'img/icons/icon-4.svg' %}" width="100%" class="m-auto" height="200" alt="our-advatage-img4">
+			</div>
+
+			<h4 class="text-white pt-2">Быстрая обработка заказов</h4>
+				</div>          
+				</div>
+			</div>
+			</div>
+			</section>
+
+		<section class="container-fluid p-lg-5 p-3 top-products">
+				{% if recommended_product %}
+					<h1 class="colorBlack pl-3 pl-lg-0 pl-xl-0 font-weight-bold">ТОП ТОВАРЫ</h1>
+					<div class="row p-3 p-lg-5 p-xl-0">
+						<!-- recommended products -->
+						{% for obj in recommended_product %}
+											
+						<div class="col-12 col-sm-9 col-md-6 col-lg-6 col-xl-3 p-2 m-auto">
+							<div class="card text-center">
+								{% for image in obj.product_images.all %}
+								{% if forloop.counter == 1 %}
+									<a href="{% url 'core:detail' obj.slug %}">
+										<img src="{{ image.imageURL }}" width="100%" height="300">
+									</a>
+								{% endif %}
+							{% endfor %}
+							<h3 class="backgroundRed text-dark m-0 p-2">
+								<a href="{% url 'core:detail' obj.slug %}" class="text-dark h5">{{ obj.name|truncatechars:20 }}</a>
+							</h3>
+							</div>
+						</div>
+						{% endfor %}
+						<!-- recommended products -->
+					</div>
+				{% endif %}
+		</section>
+		
+			
+	<section class="backgroundBlue pl-0 pr-0 pt-5 pb-5" style="background-color:#0B1934;">
+		<div class="container pl-3 pr-3 pl-sm-3 pr-sm-3 pl-md-2 pr-md-2 pl-lg-0 pr-lg-0 text-white">
+			<h2 class="text-center">Узнайте свежую информацию о скидках и акциях первым.</h2>
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pl-0 pr-0">
+				<form method="get">
+					<div class="input-group mb-3">
+						<input type="email" id="subscriber-email" value="" class="form-control" placeholder="Оставьте свой e-mail" aria-label="Оставьте свой e-mail" aria-describedby="basic-addon2">
+						<button type='submit' onclick="subscription(this)" class="btn backgroundBlack input-group-text tew" id="basic-addon2">Подписаться</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		function subscription(email){
+			email = document.getElementById('subscriber-email').value;
+			document.getElementById('subscriber-email').value='';
+			console.log('Email validation method - ' + email.toString());
+			event.preventDefault();
+			var url = "{% url 'core:subscription' %}";
+			
+			fetch(url, {
+				method:'POST',
+				headers:{
+				'Content-Type':'application/json',
+				'Accept': 'application/json',
+				'X-CSRFToken':csrftoken,
+				}, 
+				body:JSON.stringify({'email':email})
+			})
+			.then((response) => {
+				 return response.json();
+			})
+			.then((data) => {
+				console.log(data['action'])
+				if (data['action'] == 'not_valid'){
+					alert("Пожалуйста, введите действительный адрес электронной почты :(")
+				}else if(data['action'] == 'subscribed'){
+				alert('Вы уже подписались')
+				}else{
+					alert('Спасибо за подписку :)')
+				}
+			});
+			}
+	</script>
+
+
+	<section class="container-fluid pl-0 pr-0 pt-5 pb-5" style="background-image: url({% static 'img/bg/contactbg.jpeg' %});">
+		<div class="container pl-0 pr-0">
+			<div class="row">
+			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 pr-0 pl-0 text-center">
+				<img src="{% static 'img/callgirl.jpeg' %}" width="80%" height="" class="m-auto">
+			</div>
+			 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-dark pt-5 pb-5 pl-4 pr-4 pl-lg-5 pr-lg-5" style="box-shadow: 0px 0px 20px 5px #aaa; border-radius:30px;">
+				<form method='get' class="pt-5 pb-5 pl-2 pr-2 pl-lg-5 pr-lg-5 bg-white" style="box-shadow: 0px 0px 20px 5px #aaa; border-radius: 20px;">
+					<h1 class="pt-2 pb-2 ">Оставьте заявку и мы свяжемся с вами !</h1>
+					<input class="form-control mb-2 p-4" id="subscriber-fullname" type="text" placeholder="Введите ваше имя ..." aria-label="Disabled input example" >
+					<input class="form-control mb-2 p-4" id="subscriber-contactinfo" type="text" placeholder="Введите свой телефон ..." aria-label="Disabled input example" >
+					<textarea name="" style="font-weight: 400; width:100%; height:100px; font-family: inherit;"  id="subscriber-message" placeholder="Сообщение..." class="p-4"></textarea>
+					<h4 class="text-right pt-2 pb-5"><button onclick="send_contact_info(this)" type="submit" class="btn btn-lg backgroundBlue text-white m-auto">Отправить</button></h4>
+				</form>
+			 </div>
+		
+		 </div>  
+		 </div>
+
+		<script>
+			function send_contact_info(email){
+				fullname = document.getElementById('subscriber-fullname').value;
+				contactinfo = document.getElementById('subscriber-contactinfo').value;
+				message = document.getElementById('subscriber-message').value
+
+				document.getElementById('subscriber-fullname').value='';
+				document.getElementById('subscriber-contactinfo').value='';
+				document.getElementById('subscriber-message').value='';
+
+				console.log('Email - '   + fullname.toString());
+				console.log('Contact - ' + contactinfo.toString());
+				console.log('Message - ' + message.toString());
+				
+				event.preventDefault();
+				var url = "{% url 'core:contactinfo' %}";
+				
+				fetch(url, {
+				method:'POST',
+				headers:{
+					'Content-Type':'application/json',
+					'Accept': 'application/json',
+					'X-CSRFToken':csrftoken,
+				}, 
+				body:JSON.stringify({'fullname':fullname, 'contactinfo':contactinfo, 'message':message})
+				})
+				.then((response) => {
+				return response.json();
+				})
+				.then((data) => {
+				console.log(data['action'])
+				if (data['action'] == 'not_valid'){
+					alert("Пожалуйста, введите действительный адрес электронной почты :(")
+				}else if(data['action'] == 'subscribed'){
+					alert('Вы уже подписались')
+				}else{
+					alert('Спасибо за подписку :)')
+				}
+				});
+			}
+		</script>
+
+	</section>
+
+
+	{% endblock body %}
+
+	{% block js %}
+		<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
+		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+		<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+		<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+		<script>
+			var mySwiper = new Swiper('.swiper-container',{
+				speed: 1000,
+				spaceBetween: 0,
+				grabCursor:true,
+				autoplay:{
+					autoplay:true,
+					delay:4000,                             
+					disableOnInteraction:false         
+				}                       
+			});
+		</script>
+	{% endblock js %}

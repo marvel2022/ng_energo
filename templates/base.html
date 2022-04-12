@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>NGEnergo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-language" content="ru">
+    <meta property="og:title" content="NGENERGO">
+    <meta property="og:type" content="site">
+    <meta property="og:url" content="https://ngenergo.uz">
+    <meta property="og:site_name" content="NGENERGO">
+    <meta name="description" content="">
+    <meta name="author" content="Abdurasulov Husniddin, Zoxidjon Ergashev, Dovurov Jamshid" />
+    <meta name="keywords" content="" />
+    <!-- <link rel="icon" type="image/ico"  href="{% static 'img/logo-NG.ico' %}"> -->
+    <!-- <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/> -->
+    <link rel="shortcut icon" sizes="50x50" href="{%  static 'favicon.ico' %}">
+    {% block css %} 
+    
+    {% endblock css %}
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', 'UA-188496439-1');
+      </script>
+  
+      
+      <script type="text/javascript">
+        var user = '{{request.user}}'
+  
+        function getToken(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken')
+  
+        function getCookie(name) {
+          // Split cookie string and get all individual name=value pairs in an array
+          var cookieArr = document.cookie.split(";");
+  
+          // Loop through the array elements
+          for(var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+  
+            /* Removing whitespace at the beginning of the cookie name
+            and compare it with the given string */
+            if(name == cookiePair[0].trim()) {
+              // Decode the cookie value and return
+              return decodeURIComponent(cookiePair[1]);
+            }
+          }
+  
+          // Return null if not found
+          return null;
+        }
+      
+      </script>
+
+  </head>
+  <body class="container-fluid pl-0 pr-0">
+
+    <!-- Header -->
+    {% include "includes/navbar.html" %}
+    <!-- End Header -->
+
+    {% block body %}
+
+    {% endblock body %}
+
+    <!-- Footer -->
+    {% include "includes/footer.html" %}
+    <!-- End Footer -->
+
+    <button class="btn backgroundRed colorBlack btn-top" title="ScrollTop"><img src="{% static 'img/icons/up-arrow.svg' %}" width="20" height="30"></button>
+
+    {% block js %} {% endblock js %}
+    <script src="{% static 'js/email-subscriber.js' %}"></script>
+
+  </body>
+</html>

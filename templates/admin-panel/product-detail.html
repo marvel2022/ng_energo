@@ -1,0 +1,56 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>ngenergo.uz</title> {% endblock title %}
+
+        {% block body %}
+            <div class="tab-content" id="myTabContent">
+
+                <div class="tab-pane show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <h1>Продукты</h1>
+
+                
+
+                    <div class="row pb-4">
+                        <div class="row pb-3 pt-3">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-inline justify-content-between">
+                                <a href="{% url 'core:product_list' %}"><button class="btn btn-success">Назад</button></a>
+                                <a href="{% url 'core:product_update' object.slug %}"><button class="btn btn-success">Обновить</button></a>
+                            </div>
+                        </div>
+                        <div>
+                            {{ object.category }}
+                            {{ object.name }}
+                        </div>
+                       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            {% for image in object.product_images.all %}
+                                {% if forloop.counter == 1 %}
+                                    <img src="{{ image.imageURL }}" width="100%" height="200" alt="">
+                                {% endif %}
+                            {% endfor %}
+                            <div class="form-inline">
+                                {% for image in object.product_images.all %}
+                                    <img src="{{ image.imageURL }}" class="p-1" width="33%" height="100" alt="">
+                                {% endfor %}
+                            </div>
+                            <a href="#!" class="btn btn-success w-100">Изменить изображение</a>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <p class="pt-4 pb-5 text-justify">
+                                    {{ object.description|safe }}<br>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-3">
+                            <div class="form-group">
+                                {{ object.spesification|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock body %}
+

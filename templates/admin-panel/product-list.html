@@ -1,0 +1,83 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+	
+
+{% block body %}
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+			<h1>Продукты</h1>
+			<div class="row pb-4">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+					<select class="form-select" aria-label="Default select example">
+						<option selected><a href="{% url 'core:product_list' %}">Все продукты</a></option>
+						{% for obj in category_list %}
+							<option value="{{ forloop.counter }}"><a href="{% url 'core:product_list' obj.slug %}">{{ obj.name }}</a></option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+					<a href="#!" class="btn btn-outline-success"><span><i class="fa fa-plus"></i></span></a>
+				</div>
+			</div>
+			<div class="row p-3">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-inline justify-content-between p-4 border">
+					<h5 style="color: limegreen;">Вы хотите добавить новый товар?</h5>
+					<div class="form-inline">
+						<a href="{% url 'core:product_create' %}"><button class="btn btn-success ml-2">Да</button></a>
+					</div>
+				</div>
+			</div>
+			<div class="row pb-4">
+				{% for obj in object_list %}
+					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 ">
+						<div class="card">
+							<a href="{% url 'core:product_detail' obj.slug %}">
+								{% for image in obj.product_images.all %}
+									{% if forloop.counter == 1 %}
+										<img src="{{ image.imageURL }}" width="100%" height="150" alt="products-img1">
+									{% endif %}
+								{% endfor %}
+								<h5 class="p-2">{{ obj.name }}</h5>
+							</a>
+							<div class="card-footer border-0 form-inline justify-content-between p-1">
+								<button class="btn btn-danger"><a href="{% url 'core:product_delete' obj.slug %}">Удалить</a></button>
+								<button class="btn btn-success"><a href="{% url 'core:product_update' obj.slug %}">Обновить</a></button>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<!-- Pagination -->
+				{% if object_list %}
+				<div class="row text-center">
+					<nav class="m-auto" aria-label="Page navigation example">
+						<ul class="pagination pagination-lg">
+							<li class="page-item">
+								{% if page_obj.has_previous %}
+									<a class="page-link text-dark" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								{% else %}
+								<a class="page-link text-dark" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								{% endif %}
+							</li>
+							{% for index in page_obj.paginator.page_range %}
+								{% if page_obj.number == index %}
+									<li class="page-itemtransparent"><a class="page-link text-dark" style="background-color:rgb(209, 201, 201)" href="?page={{ index }}">{{ index }}</a></li>	
+								{% else %}
+									<li class="page-item"><a class="page-link text-dark" href="?page={{ index }}">{{ index }}</a></li>
+								{% endif %}
+							{% endfor %} 
+							<li class="page-item">
+								{% if page_obj.has_next %}
+									<a class="page-link text-dark" href="?page={{ page_obj.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								{% else %}
+									<a class="page-link text-dark" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								{% endif %}
+							</li>
+						</ul>
+					</nav>
+				</div>
+			{% endif %}
+			<!-- End Pagination -->
+		</div>
+	</div>
+{% endblock body %}
